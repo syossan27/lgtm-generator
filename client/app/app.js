@@ -4,8 +4,10 @@ angular.module('lgtmGeneratorApp', [
   'ngCookies',
   'ngResource',
   'ngSanitize',
+  //'ngAnimate',
   'ui.router',
-  'ui.bootstrap'
+  'ui.bootstrap',
+  'dcbImgFallback'
 ])
   .config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
     $urlRouterProvider
