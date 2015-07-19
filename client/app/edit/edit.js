@@ -6,6 +6,7 @@ angular.module('lgtmGeneratorApp')
       .state('edit', {
         url: '/edit',
         templateUrl: 'app/edit/edit.html',
-        controller: 'EditCtrl'
+        controller: 'EditCtrl',
+        params: {'url' : null},
       });
   });
