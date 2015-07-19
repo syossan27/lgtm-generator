@@ -6,7 +6,16 @@ var layer;
 var container;
 
 angular.module('lgtmGeneratorApp')
-  .controller('EditCtrl', function ($scope, $http, $state, $document) {
+  .controller('EditCtrl', function ($scope, $http, $state, $location) {
+
+    $scope.hide_flg= true;
+
+    if ($state.params.url === null) {
+      $location.path('/');
+      $location.replace();
+    } else {
+      $scope.hide_flg = false;
+    }
 
     $scope.moveText = function(e) {
       var keyCode = e.keyCode;
