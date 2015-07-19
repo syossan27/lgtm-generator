@@ -19,7 +19,10 @@ angular.module('lgtmGeneratorApp')
     }
 
     $scope.edit = function() {
-      $state.go('edit');
+      var image_src = angular.element("img[ng-src='"+this.image+"']").attr('src');
+      if (image_src !== "assets/images/no_image.png") {
+        $state.go('edit', { url: this.image });
+      }
     }
 
     angular.element(window).load(function () {
