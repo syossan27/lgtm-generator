@@ -1,16 +1,18 @@
-<div class="row">
-  <div class="col-lg-6 col-lg-offset-3">
-    <form class="form-search form-inline text-center">
-      <input type="text" ng-model="keywords" class="input-medium search-query form-control" placeholder="Keywords...">
-      <button type="submit" class="btn" ng-click="search()">Search</button>
-    </form>
+<div class="container">
+  <div class="row m-top-10">
+    <div class="col-lg-6 col-lg-offset-3">
+      <form class="form-search form-inline text-center">
+        <input type="text" ng-model="keywords" class="input-medium search-query form-control" placeholder="Keywords...">
+        <button type="submit" class="btn" ng-click="search()">Search</button>
+      </form>
+    </div>
   </div>
-</div>
 
-<div class="row">
-  <div class="col-lg-10 col-lg-offset-1">
-    <div id="tile-image" width="100%" height="100%">
-      <img ng-repeat="image in images" ng-src="{{image}}" fallback-src="assets/images/no_image.png" ng-click="edit()" />
+  <div class="row m-top-10">
+    <div class="col-lg-10 col-lg-offset-1">
+      <div id="tile-image" width="100%" height="100%">
+        <img ng-repeat="image in images" ng-src="{{image}}" fallback-src="assets/images/no_image.png" ng-click="edit()" />
+      </div>
     </div>
   </div>
 </div>
