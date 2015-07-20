@@ -155,10 +155,11 @@ angular.module('lgtmGeneratorApp')
       }
     }
 
-    $scope.resetSize = function (diff) {
+    $scope.reset = function (diff) {
       var default_px = 80;
       setFontSize(lgtm_text, default_px);
       setFontSize(lgtm_text_outline, default_px);
+      moveTextCenter();
       stage.update();
     }
 

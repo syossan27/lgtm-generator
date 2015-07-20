@@ -3,6 +3,12 @@
 angular.module('lgtmGeneratorApp')
   .controller('MainCtrl', function ($scope, $http, $state) {
 
+    $scope.hide_flg = true;
+
+    // ページネーション設定
+    $scope.currentPage = 1;
+    $scope.maxSize = 5;
+
     $scope.images = [
     ];
 
@@ -13,10 +19,24 @@ angular.module('lgtmGeneratorApp')
 
       $http.post('/api/things/search', json_data).
         success(function(data) {
-          // console.log(data);
-          $scope.images = data;
+          $scope.images = data['images'];
+          $scope.totalItems = 64;
         });
+
+      $scope.hide_flg = false;
     }
+
+    $scope.pageChanged = function() {
+      var json_data = {
+        keywords: $scope.keywords,
+        page: $scope.currentPage
+      };
+
+      $http.post('/api/things/search', json_data).
+        success(function(data) {
+          $scope.images = data['images'];
+        });
+    };
 
     $scope.edit = function() {
       var image_src = angular.element("img[ng-src='"+this.image+"']").attr('src');
