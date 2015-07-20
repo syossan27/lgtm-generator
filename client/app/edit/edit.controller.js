@@ -206,12 +206,22 @@ angular.module('lgtmGeneratorApp')
       setFont(font);
     }
 
-    function setFont(font){
+    function setFont(font) {
       var list = lgtm_text.font.match('^([^ ]+) ([^ ]+) (.+)$');
       var cssstr = list[1]+" "+list[2]+" "+font;
       lgtm_text.font = cssstr;
       lgtm_text_outline.font = cssstr;
       stage.update();
+    }
+
+    $scope.downloadImage = function () {
+      try{
+        var canvas_image = stage.toDataURL("image/png").replace("image/png", "image/octet-stream");
+        window.location.href(canvas_image);
+      }catch(e){
+        console.log(e);
+        alert("ダウンロードに失敗しました");
+      }
     }
 
     // function imageLoadError(){
