@@ -2,8 +2,10 @@
 
 var stage;
 var img;
-var layer;
 var container;
+var layer;
+var lgtm_text;
+var lgtm_text_outline;
 
 angular.module('lgtmGeneratorApp')
   .controller('EditCtrl', function ($scope, $http, $state, $location) {
@@ -13,6 +15,7 @@ angular.module('lgtmGeneratorApp')
     if ($state.params.url === null) {
       $location.path('/');
       $location.replace();
+      return;
     } else {
       $scope.hide_flg = false;
     }
@@ -41,9 +44,12 @@ angular.module('lgtmGeneratorApp')
     }
 
     $scope.init = function () {
-      var imgUrl    = $state.params.url;
-      var lgtm_text = new createjs.Text('LGTM', 'Bold 80px Arial', '#FFF');
-      var lgtm_text_outline = lgtm_text.clone();
+      // フォントの読込
+      loadFont();
+
+      var imgUrl = $state.params.url;
+      lgtm_text  = new createjs.Text('LGTM', 'Bold 80px Arial', '#FFF');
+      lgtm_text_outline = lgtm_text.clone();
 
       stage         = new createjs.Stage("edit-canvas");
       img           = new createjs.Bitmap(imgUrl);
@@ -63,7 +69,7 @@ angular.module('lgtmGeneratorApp')
 
       img.image.onload = function() {
         resizeImage();
-        moveTextCenter(lgtm_text);
+        moveTextCenter();
         layer.graphics.beginFill("#000000").drawRect(0, 0, img.image.width, img.image.height);
         img.hitArea = layer;
         stage.update();
@@ -96,10 +102,10 @@ angular.module('lgtmGeneratorApp')
       }
     }
 
-    function moveTextCenter(lgtm_text) {
+    function moveTextCenter() {
       // テキストを中央に移動
-      container.x = (stage.width - lgtm_text.getMeasuredWidth()) / 2;
-      container.y = stage.height - (lgtm_text.getMeasuredHeight() * 2);
+      container.x = (stage.width  - lgtm_text.getMeasuredWidth())  / 2;
+      container.y = (stage.height - lgtm_text.getMeasuredHeight()) / 2;
     }
 
     function clickFocus(eventObject) {
@@ -126,6 +132,85 @@ angular.module('lgtmGeneratorApp')
       var instance = eventObject.currentTarget;
       instance.removeEventListener("pressmove", drag);
       instance.removeEventListener("pressup", stopDrag);
+    }
+
+
+    function setFontSize(target, px) {
+      var list = lgtm_text.font.match('^([^ ]+) ([^ ]+) (.+)$');
+      target.font = list[1]+" "+px+"px "+list[3];
+    }
+
+    function getFontSize(target) {
+      var list = target.font.match(/ ([0-9]+)px /);
+      return parseInt(list[1]);
+    }
+
+    $scope.changeSize = function (diff) {
+      var px = getFontSize(lgtm_text);
+      px = px + diff;
+      if (px > 0) {
+        setFontSize(lgtm_text, px);
+        setFontSize(lgtm_text_outline, px);
+        stage.update();
+      }
+    }
+
+    $scope.resetSize = function (diff) {
+      var default_px = 80;
+      setFontSize(lgtm_text, default_px);
+      setFontSize(lgtm_text_outline, default_px);
+      stage.update();
+    }
+
+    $scope.changeText = function () {
+      lgtm_text.text = $scope.input_text;
+      lgtm_text_outline.text = $scope.input_text;
+      stage.update();
+    }
+
+    $scope.fontList = [
+      ['Arial',''],
+      ['Russo One','http://fonts.googleapis.com/css?family=Russo+One'],
+      ['Bowlby One SC','http://fonts.googleapis.com/css?family=Bowlby+One+SC'],
+      ['Fascinate','http://fonts.googleapis.com/css?family=Fascinate'],
+      ['Vibur','http://fonts.googleapis.com/css?family=Vibur'],
+      ['Audiowide','http://fonts.googleapis.com/css?family=Audiowide'],
+      ['Codystar','http://fonts.googleapis.com/css?family=Codystar'],
+      ['Vast Shadow','http://fonts.googleapis.com/css?family=Vast+Shadow']
+    ];
+
+    $scope.status = {
+      isopen: false
+    };
+
+    $scope.toggleDropdown = function($event) {
+      $event.preventDefault();
+      $event.stopPropagation();
+      $scope.status.isopen = !$scope.status.isopen;
+    };
+
+    function loadFont(){
+      $.each($scope.fontList, function(index, font){
+        var name = font[0];
+        var url  = font[1];
+        var head = angular.element("head");
+
+        if (url !== '') {
+          head.append("<link rel='stylesheet' type='text/css' href='" + url + "'>");
+        }
+      });
+    }
+
+    $scope.changeFont = function (font) {
+      setFont(font);
+    }
+
+    function setFont(font){
+      var list = lgtm_text.font.match('^([^ ]+) ([^ ]+) (.+)$');
+      var cssstr = list[1]+" "+list[2]+" "+font;
+      lgtm_text.font = cssstr;
+      lgtm_text_outline.font = cssstr;
+      stage.update();
     }
 
     // function imageLoadError(){
