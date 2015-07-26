@@ -14,4 +14,9 @@ angular.module('lgtmGeneratorApp', [
       .otherwise('/');
 
     $locationProvider.html5Mode(true);
+  })
+  .run(function($rootScope){
+    $rootScope.$on('$stateChangeSuccess', function(event, toState){
+      ga('send', 'pageview');
+    });
   });
