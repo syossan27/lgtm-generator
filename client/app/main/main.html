@@ -15,4 +15,10 @@
       </div>
     </div>
   </div>
+
+  <div class="row m-top-10">
+    <div id="paging" class="col-lg-10 col-lg-offset-1">
+      <pagination ng-model="currentPage" total-items="totalItems" max-size="maxSize" boundary-links="true" ng-hide="hide_flg" ng-change="pageChanged()"></pagination>
+    </div>
+  </div>
 </div>

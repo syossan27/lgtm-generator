@@ -22,6 +22,11 @@ exports.search = function(req, res) {
   var url = "https://ajax.googleapis.com/ajax/services/search/images";
   var params = "?v=1.0&hl=ja&key=" + api_key + "&q=" + encodeURIComponent(keywords) + "&rsz=8"
 
+  if ('page' in req.body) {
+    var page = req.body.page - 1;
+    params += "&start=" + ((page * 8) + 1);
+  }
+
   var options = {
     url: url+params,
     json: true
@@ -29,14 +34,16 @@ exports.search = function(req, res) {
 
   request.get(options, function (error, response, body) {
     if (!error && response.statusCode == 200) {
-      // console.log(body.responseData.results);
-      // console.log(body.responseData.cursor.pages);
       var results = body.responseData.results;
+
       var result_url = [];
       for (var i = 0; i < results.length; i++) {
         result_url.push(results[i]['url']);
       }
-      res.json(result_url);
+
+      res.json({
+        "images": result_url
+      });
     } else {
       console.log('error: '+ response.statusCode);
     }

@@ -69,17 +69,6 @@ module.exports = function (grunt) {
         ],
         tasks: ['injector:css']
       },
-      mochaTest: {
-        files: ['server/**/*.spec.js'],
-        tasks: ['env:test', 'mochaTest']
-      },
-      jsTest: {
-        files: [
-          '<%= yeoman.client %>/{app,components}/**/*.spec.js',
-          '<%= yeoman.client %>/{app,components}/**/*.mock.js'
-        ],
-        tasks: ['newer:jshint:all', 'karma']
-      },
       injectSass: {
         files: [
           '<%= yeoman.client %>/{app,components}/**/*.{scss,sass}'],
@@ -115,40 +104,6 @@ module.exports = function (grunt) {
           livereload: true,
           nospawn: true //Without this option specified express won't be reloaded
         }
-      }
-    },
-
-    // Make sure code styles are up to par and there are no obvious mistakes
-    jshint: {
-      options: {
-        jshintrc: '<%= yeoman.client %>/.jshintrc',
-        reporter: require('jshint-stylish')
-      },
-      server: {
-        options: {
-          jshintrc: 'server/.jshintrc'
-        },
-        src: [
-          'server/**/*.js',
-          '!server/**/*.spec.js'
-        ]
-      },
-      serverTest: {
-        options: {
-          jshintrc: 'server/.jshintrc-spec'
-        },
-        src: ['server/**/*.spec.js']
-      },
-      all: [
-        '<%= yeoman.client %>/{app,components}/**/*.js',
-        '!<%= yeoman.client %>/{app,components}/**/*.spec.js',
-        '!<%= yeoman.client %>/{app,components}/**/*.mock.js'
-      ],
-      test: {
-        src: [
-          '<%= yeoman.client %>/{app,components}/**/*.spec.js',
-          '<%= yeoman.client %>/{app,components}/**/*.mock.js'
-        ]
       }
     },
 
@@ -425,34 +380,6 @@ module.exports = function (grunt) {
       ]
     },
 
-    // Test settings
-    karma: {
-      unit: {
-        configFile: 'karma.conf.js',
-        singleRun: true
-      }
-    },
-
-    mochaTest: {
-      options: {
-        reporter: 'spec'
-      },
-      src: ['server/**/*.spec.js']
-    },
-
-    protractor: {
-      options: {
-        configFile: 'protractor.conf.js'
-      },
-      chrome: {
-        options: {
-          args: {
-            browser: 'chrome'
-          }
-        }
-      }
-    },
-
     env: {
       test: {
         NODE_ENV: 'test'
@@ -603,7 +530,6 @@ module.exports = function (grunt) {
       return grunt.task.run([
         'env:all',
         'env:test',
-        'mochaTest'
       ]);
     }
 
@@ -615,7 +541,6 @@ module.exports = function (grunt) {
         'concurrent:test',
         'injector',
         'autoprefixer',
-        'karma'
       ]);
     }
 
@@ -660,7 +585,6 @@ module.exports = function (grunt) {
   ]);
 
   grunt.registerTask('default', [
-    'newer:jshint',
     'test',
     'build'
   ]);

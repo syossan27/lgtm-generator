@@ -33,6 +33,30 @@
     }
 }
 
+#help_text {
+    text-align: center;
+}
+
+#text-setting {
+    text-align: center;
+
+    input[type="textarea"] {
+        width: 50%;
+        display: inline;
+    }
+
+    label {
+        font-size: 15px;
+        margin: 0px 5px;
+    }
+}
+
+#download {
+    text-align: center;
+}
+
+.nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
+
 .footer {
     text-align: center;
     padding: 30px 0;
