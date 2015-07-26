@@ -51,29 +51,46 @@ angular.module('lgtmGeneratorApp')
       lgtm_text  = new createjs.Text('LGTM', 'Bold 80px Arial', '#FFF');
       lgtm_text_outline = lgtm_text.clone();
 
-      stage         = new createjs.Stage("edit-canvas");
-      img           = new createjs.Bitmap(imgUrl);
-      container     = new createjs.Container();
-      layer         = new createjs.Shape();
+      stage     = new createjs.Stage("edit-canvas");
+      container = new createjs.Container();
+      layer     = new createjs.Shape();
 
-      lgtm_text_outline.outline = 2;
-      lgtm_text_outline.color = "#000";
+      var apiUrl = 'http://52.69.177.29/index.php';
 
-      stage.addChild(img);
-      stage.addChild(container);
-      container.addChild(lgtm_text);
-      container.addChild(lgtm_text_outline);
+      // PHP側で画像取得する
+      $http({
+        method: 'POST',
+        url: apiUrl,
+        data: { image_url: imgUrl },
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+      }).
+        success(function(data, status) {
+          var url_split = imgUrl.split('.');
+          var type = url_split[url_split.length - 1].toLowerCase();
+          var image_data = "data:image/" + type + ";base64," + data;
+          img = new createjs.Bitmap(image_data);
 
-      img.addEventListener('mousedown', clickFocus);
-      container.addEventListener('mousedown', dragMove);
+          lgtm_text_outline.outline = 2;
+          lgtm_text_outline.color = "#000";
 
-      img.image.onload = function() {
-        resizeImage();
-        moveTextCenter();
-        layer.graphics.beginFill("#000000").drawRect(0, 0, img.image.width, img.image.height);
-        img.hitArea = layer;
-        stage.update();
-      };
+          stage.addChild(img);
+          stage.addChild(container);
+          container.addChild(lgtm_text);
+          container.addChild(lgtm_text_outline);
+
+          img.addEventListener('mousedown', clickFocus);
+          container.addEventListener('mousedown', dragMove);
+
+          img.image.onload = function() {
+            resizeImage();
+            moveTextCenter();
+            layer.graphics.beginFill("#000000").drawRect(0, 0, img.image.width, img.image.height);
+            img.hitArea = layer;
+            stage.update();
+          };
+        }).
+        error(function(data, status){
+        });
     }
 
     function resizeImage() {
@@ -171,13 +188,13 @@ angular.module('lgtmGeneratorApp')
 
     $scope.fontList = [
       ['Arial',''],
-      ['Russo One','http://fonts.googleapis.com/css?family=Russo+One'],
-      ['Bowlby One SC','http://fonts.googleapis.com/css?family=Bowlby+One+SC'],
-      ['Fascinate','http://fonts.googleapis.com/css?family=Fascinate'],
-      ['Vibur','http://fonts.googleapis.com/css?family=Vibur'],
-      ['Audiowide','http://fonts.googleapis.com/css?family=Audiowide'],
-      ['Codystar','http://fonts.googleapis.com/css?family=Codystar'],
-      ['Vast Shadow','http://fonts.googleapis.com/css?family=Vast+Shadow']
+      ['Russo One','https://fonts.googleapis.com/css?family=Russo+One'],
+      ['Bowlby One SC','https://fonts.googleapis.com/css?family=Bowlby+One+SC'],
+      ['Fascinate','https://fonts.googleapis.com/css?family=Fascinate'],
+      ['Vibur','https://fonts.googleapis.com/css?family=Vibur'],
+      ['Audiowide','https://fonts.googleapis.com/css?family=Audiowide'],
+      ['Codystar','https://fonts.googleapis.com/css?family=Codystar'],
+      ['Vast Shadow','https://fonts.googleapis.com/css?family=Vast+Shadow']
     ];
 
     $scope.status = {
@@ -215,14 +232,30 @@ angular.module('lgtmGeneratorApp')
     }
 
     $scope.downloadImage = function () {
+      var canvas_image = stage.toDataURL("image/jpeg").replace("image/jpeg", "image/octet-stream");;
       try{
-        var canvas_image = stage.toDataURL("image/png").replace("image/png", "image/octet-stream");
-        window.location.href(canvas_image);
+        var a = document.createElement('a');
+        a.download = "LGTM";
+        a.href = canvas_image;
+        a.click();
       }catch(e){
         console.log(e);
         alert("ダウンロードに失敗しました");
       }
     }
+
+    $scope.fill_color = '#FFFFFF';
+    $scope.stroke_color = '#000000';
+
+    $scope.$watch('fill_color', function(color) {
+      lgtm_text.color = color;
+      stage.update();
+    });
+
+    $scope.$watch('stroke_color', function(color) {
+      lgtm_text_outline.color = color;
+      stage.update();
+    });
 
     // function imageLoadError(){
     //   alert("Error:画像のロードに失敗しました\n指定したものが画像でないか、取得できません。");

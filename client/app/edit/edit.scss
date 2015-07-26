@@ -33,12 +33,21 @@
     }
 }
 
+#help_text {
+    text-align: center;
+}
+
 #text-setting {
     text-align: center;
 
-    input {
+    input[type="textarea"] {
         width: 50%;
         display: inline;
+    }
+
+    label {
+        font-size: 15px;
+        margin: 0px 5px;
     }
 }
 

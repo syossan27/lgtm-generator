@@ -23,6 +23,8 @@ angular.module('lgtmGeneratorApp')
           $scope.totalItems = 64;
         });
 
+      $scope.currentPage = 1;
+
       $scope.hide_flg = false;
     }
 
@@ -45,11 +47,12 @@ angular.module('lgtmGeneratorApp')
       }
     }
 
-    angular.element(window).load(function () {
-      angular.element('#tile-image').freetile({
-        animate: true,
-        elementDelay: 30
-      });
-    });
+    //angular.element(window).load(function () {
+    //angular.element(document).ready(function() {
+    //  angular.element('#tile-image').freetile({
+    //    animate: true,
+    //    elementDelay: 120
+    //  });
+    //});
 
   });

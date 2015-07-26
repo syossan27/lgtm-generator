@@ -5,6 +5,13 @@
     </div>
   </div>
 
+  <div class="row">
+    <div id="help_text" class="col-lg-6 col-lg-offset-3">
+      <h5>文字の位置は文字をドラッグするか、</h5>
+      <h5>画像をクリックしてから矢印キーで動かして下さい。</h5>
+    </div>
+  </div>
+
   <div class="row m-top-5">
     <div id="text-setting" class="col-lg-6 col-lg-offset-3">
       <input type="textarea" class="form-control" placeholder="LGTM" ng-model="input_text" ng-keyup="changeText()"></input>
@@ -33,6 +40,9 @@
           <li><a href="" ng-repeat="font in fontList" ng-click="changeFont(font[0])">{{font[0]}}</a></li>
         </ul>
       </div>
+
+      <label>文字色: </label><input type='color' id='color_fill' ng-model="fill_color" />
+      <label>文字線色: </label><input type='color' id='color_stroke' ng-model="stroke_color" />
     </div>
   </div>
 

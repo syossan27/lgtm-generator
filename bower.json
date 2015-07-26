@@ -18,7 +18,8 @@
     "freetile": "~0.3.1",
     "angular-img-fallback": "~0.1.2",
     "angular-animate": "~1.4.3",
-    "EaselJS": "~0.8.1"
+    "EaselJS": "~0.8.1",
+    "spectrum": "~1.7.0"
   },
   "devDependencies": {
     "angular-mocks": ">=1.2.*",
