@@ -1,7 +1,11 @@
 'use strict';
 
 angular.module('lgtmGeneratorApp')
-  .controller('MainCtrl', function ($scope, $http, $state) {
+  .controller('MainCtrl', function ($scope, $http, $state, $location, $window) {
+
+    if ($location.protocol() === 'https') {
+      $window.location.href = $location.absUrl().replace('https', 'http');
+    }
 
     $scope.hide_flg = true;
 
