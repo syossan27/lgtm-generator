@@ -55,7 +55,7 @@ angular.module('lgtmGeneratorApp')
       container = new createjs.Container();
       layer     = new createjs.Shape();
 
-      var apiUrl = 'https://52.69.177.29/index.php';
+      var apiUrl = 'http://52.69.177.29/index.php';
 
       // PHP側で画像取得する
       $http({
