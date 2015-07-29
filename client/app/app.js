@@ -10,14 +10,17 @@ angular.module('lgtmGeneratorApp', [
   'angulartics',
   'angulartics.google.analytics'
 ])
-  .config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
+  .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $analyticsProvider) {
     $urlRouterProvider
       .otherwise('/');
 
+    $analyticsProvider.virtualPageviews(false)
+
     $locationProvider.html5Mode(true);
+
   })
-  .run(function($rootScope){
-    $rootScope.$on('$stateChangeSuccess', function(event, toState){
-      ga('send', 'pageview');
+  .run(function($rootScope, $window, $location){
+    $rootScope.$on('$stateChangeSuccess', function(event){
+      $window._gaq.push(['_trackPageview', $location.path()]);
     });
   });
