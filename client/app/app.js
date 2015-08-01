@@ -8,7 +8,8 @@ angular.module('lgtmGeneratorApp', [
   'ui.bootstrap',
   'dcbImgFallback',
   'angulartics',
-  'angulartics.google.analytics'
+  'angulartics.google.analytics',
+  'rzModule'
 ])
   .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $analyticsProvider) {
     $urlRouterProvider
