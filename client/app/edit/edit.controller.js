@@ -10,7 +10,25 @@ var lgtm_text_outline;
 angular.module('lgtmGeneratorApp')
   .controller('EditCtrl', function ($scope, $http, $state, $location) {
 
-    $scope.hide_flg= true;
+    // リダイレクトする時に画面の諸々を隠す
+    $scope.hide_flg = true;
+
+    $scope.sizeSlider = {
+      ceil: 200,
+      floor: 50,
+      init: 100
+    };
+
+    $scope.$on("slideEnded", function() {
+      var percentage = parseInt($scope.sizeSlider.init) / 100;
+      resizeImage(percentage, percentage);
+      moveTextCenter();
+      stage.update();
+    });
+
+    $scope.translate = function(value) {
+      return value + "%";
+    };
 
     if ($state.params.url === null) {
       $location.path('/');
@@ -93,30 +111,24 @@ angular.module('lgtmGeneratorApp')
         });
     }
 
-    function resizeImage() {
-      var MAX_PX_SIZE = 300;
-      var w = parseInt(img.image.width);
-      var h = parseInt(img.image.height);
+    function resizeImage(multiple) {
+      if (typeof multiple === 'undefined') multiple = 1;
+
+      var MAX_PX_SIZE = 900;
+      var w = parseInt(img.image.width * multiple);
+      var h = parseInt(img.image.height * multiple);
 
       // アスペクト比をたもったままリサイズ
-      if ( w > MAX_PX_SIZE || h > MAX_PX_SIZE || $('#fit_flag').prop('checked')) {
-        var scale = Math.min( MAX_PX_SIZE / w, MAX_PX_SIZE / h);
-        img.scaleX = scale;
-        img.scaleY = scale;
-        var rsizew = img.image.width * scale;
-        var rsizeh = img.image.height * scale;
-        stage.canvas.width = rsizew;
-        stage.canvas.height = rsizeh;
-        stage.width = rsizew;
-        stage.height = rsizeh;
-      } else {
-        img.scaleX = 1;
-        img.scaleY = 1;
-        stage.canvas.width = w;
-        stage.canvas.height = h;
-        stage.width = w;
-        stage.height = h;
-      }
+      // var scale = Math.min( MAX_PX_SIZE / w, MAX_PX_SIZE / h);
+      var scale = multiple;
+      img.scaleX = scale;
+      img.scaleY = scale;
+      var rsizew = img.image.width * scale;
+      var rsizeh = img.image.height * scale;
+      stage.canvas.width = rsizew;
+      stage.canvas.height = rsizeh;
+      stage.width = rsizew;
+      stage.height = rsizeh;
     }
 
     function moveTextCenter() {
@@ -239,7 +251,6 @@ angular.module('lgtmGeneratorApp')
         a.href = canvas_image;
         a.click();
       }catch(e){
-        console.log(e);
         alert("ダウンロードに失敗しました");
       }
     }
