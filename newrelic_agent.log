@@ -1,0 +1,14 @@
+{"v":0,"level":30,"name":"newrelic","hostname":"BPS.local","pid":55820,"time":"2015-08-01T07:27:58.411Z","msg":"Starting New Relic for Node.js connection process."}
+{"v":0,"level":40,"name":"newrelic","hostname":"BPS.local","pid":55820,"time":"2015-08-01T07:27:58.815Z","msg":"Unrecognized version NaN of Express detected; not instrumenting","component":"express"}
+{"v":0,"level":30,"name":"newrelic","hostname":"BPS.local","pid":55820,"time":"2015-08-01T07:27:59.946Z","msg":"Platform is not a flavor of linux, omitting docker info","component":"system-info"}
+{"v":0,"level":30,"name":"newrelic","hostname":"BPS.local","pid":55820,"time":"2015-08-01T07:28:00.960Z","msg":"Request for AWS attribute instance-type timed out","component":"aws-info"}
+{"v":0,"level":30,"name":"newrelic","hostname":"BPS.local","pid":55820,"time":"2015-08-01T07:28:05.086Z","msg":"Reporting to: https://rpm.newrelic.com/accounts/1054475/applications/7243091","component":"new_relic_response"}
+{"v":0,"level":30,"name":"newrelic","hostname":"BPS.local","pid":55820,"time":"2015-08-01T07:28:05.087Z","msg":"Connected to collector-148.newrelic.com:443 with agent run ID 31176158830725399.","component":"collector_api"}
+{"v":0,"level":30,"name":"newrelic","hostname":"BPS.local","pid":55820,"time":"2015-08-01T07:29:15.222Z","msg":"There was an error in requesting AWS attribute instance-type: connect ETIMEDOUT","component":"aws-info"}
+{"v":0,"level":30,"name":"newrelic","hostname":"BPS.local","pid":56012,"time":"2015-08-01T07:30:28.453Z","msg":"Starting New Relic for Node.js connection process."}
+{"v":0,"level":40,"name":"newrelic","hostname":"BPS.local","pid":56012,"time":"2015-08-01T07:30:28.820Z","msg":"Unrecognized version NaN of Express detected; not instrumenting","component":"express"}
+{"v":0,"level":30,"name":"newrelic","hostname":"BPS.local","pid":56012,"time":"2015-08-01T07:30:29.972Z","msg":"Platform is not a flavor of linux, omitting docker info","component":"system-info"}
+{"v":0,"level":30,"name":"newrelic","hostname":"BPS.local","pid":56012,"time":"2015-08-01T07:30:30.989Z","msg":"Request for AWS attribute instance-type timed out","component":"aws-info"}
+{"v":0,"level":30,"name":"newrelic","hostname":"BPS.local","pid":56012,"time":"2015-08-01T07:30:34.999Z","msg":"Reporting to: https://rpm.newrelic.com/accounts/1054475/applications/7243091","component":"new_relic_response"}
+{"v":0,"level":30,"name":"newrelic","hostname":"BPS.local","pid":56012,"time":"2015-08-01T07:30:35.000Z","msg":"Connected to collector-148.newrelic.com:443 with agent run ID 31176158830731225.","component":"collector_api"}
+{"v":0,"level":30,"name":"newrelic","hostname":"BPS.local","pid":56012,"time":"2015-08-01T07:31:45.352Z","msg":"There was an error in requesting AWS attribute instance-type: connect ETIMEDOUT","component":"aws-info"}
