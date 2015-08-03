@@ -244,11 +244,13 @@ angular.module('lgtmGeneratorApp')
     }
 
     $scope.downloadImage = function () {
-      var canvas_image = stage.toDataURL("image/jpeg").replace("image/jpeg", "image/octet-stream");;
+      var canvas_image = stage.toDataURL("image/png",0.8).replace("image/png", "image/octet-stream");
       try{
         var a = document.createElement('a');
+        document.body.appendChild(a);
         a.download = "LGTM";
         a.href = canvas_image;
+        a.target = "_self";
         a.click();
       }catch(e){
         alert("ダウンロードに失敗しました");
