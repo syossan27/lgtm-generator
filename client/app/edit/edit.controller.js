@@ -248,7 +248,7 @@ angular.module('lgtmGeneratorApp')
       try{
         var a = document.createElement('a');
         document.body.appendChild(a);
-        a.download = "LGTM";
+        a.download = "LGTM.png";
         a.href = canvas_image;
         a.target = "_self";
         a.click();
