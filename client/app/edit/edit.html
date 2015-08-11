@@ -1,18 +1,19 @@
 <div class="container" ng-hide="hide_flg">
   <div class="row m-top-10">
     <div id="in-canvas" class="col-lg-12">
-      <canvas id="edit-canvas" width="300" height="300" ng-init="init()" ng-keydown="moveText($event)" tabindex="0"></canvas>
+      <canvas id="edit-canvas" width="300" height="300" ng-init="init()" ng-keydown="moveText($event)" tabindex="0" ng-hide="hide_canvas_flg"></canvas>
+      <img id="loading-image" src="assets/images/loading.gif" ng-hide="hide_loading_flg"/>
     </div>
   </div>
 
-  <div class="row">
+  <div class="row" ng-hide="hide_canvas_flg">
     <div id="help_text" class="col-lg-6 col-lg-offset-3">
       <h5>文字の位置は文字をドラッグするか、</h5>
       <h5>画像をクリックしてから矢印キーで動かして下さい。</h5>
     </div>
   </div>
 
-  <div class="row m-top-5">
+  <div class="row m-top-5" ng-hide="hide_canvas_flg">
     <div id="text-setting" class="col-lg-6 col-lg-offset-3">
       <input type="textarea" class="form-control" placeholder="LGTM" ng-model="input_text" ng-keyup="changeText()"></input>
       <div class="btn-group" role="group">
@@ -29,7 +30,7 @@
     </div>
   </div>
 
-  <div class="row m-top-5">
+  <div class="row m-top-5" ng-hide="hide_canvas_flg">
     <div id="text-setting" class="col-lg-6 col-lg-offset-3">
       <div class="btn-group" dropdown is-open="status.isopen">
         <button type="button" id="select-font" class="btn btn-default dropdown-toggle" ng-click="toggleDropdown($event)" dropdown-toggle ng-disabled="disabled">
@@ -48,11 +49,11 @@
     </div>
   </div>
 
-  <div class="row m-top-5 col-lg-6 col-lg-offset-3">
+  <div class="row m-top-5 col-lg-6 col-lg-offset-3" ng-hide="hide_canvas_flg">
     <rzslider rz-slider-model="sizeSlider.init" rz-slider-floor="sizeSlider.floor" rz-slider-ceil="sizeSlider.ceil" rz-slider-translate="translate"></rzslider>
   </div>
 
-  <div class="row m-top-5">
+  <div class="row m-top-5" ng-hide="hide_canvas_flg">
     <div id="download" class="col-lg-6 col-lg-offset-3">
       <button type="button" class="btn btn-default" ng-click="downloadImage()">
         <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>

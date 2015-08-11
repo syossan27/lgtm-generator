@@ -12,6 +12,8 @@ angular.module('lgtmGeneratorApp')
 
     // リダイレクトする時に画面の諸々を隠す
     $scope.hide_flg = true;
+    $scope.hide_canvas_flg = true;
+    $scope.hide_loading_flg = false;
 
     $scope.sizeSlider = {
       ceil: 200,
@@ -66,13 +68,6 @@ angular.module('lgtmGeneratorApp')
       loadFont();
 
       var imgUrl = $state.params.url;
-      lgtm_text  = new createjs.Text('LGTM', 'Bold 80px Arial', '#FFF');
-      lgtm_text_outline = lgtm_text.clone();
-
-      stage     = new createjs.Stage("edit-canvas");
-      container = new createjs.Container();
-      layer     = new createjs.Shape();
-
       var apiUrl = 'http://52.69.177.29/index.php';
 
       // PHP側で画像取得する
@@ -83,6 +78,16 @@ angular.module('lgtmGeneratorApp')
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
       }).
         success(function(data, status) {
+          $scope.hide_canvas_flg = false;
+          $scope.hide_loading_flg = true;
+
+          lgtm_text  = new createjs.Text('LGTM', 'Bold 80px Arial', '#FFF');
+          lgtm_text_outline = lgtm_text.clone();
+
+          stage     = new createjs.Stage("edit-canvas");
+          container = new createjs.Container();
+          layer     = new createjs.Shape();
+
           var url_split = imgUrl.split('.');
           var type = url_split[url_split.length - 1].toLowerCase();
           var image_data = "data:image/" + type + ";base64," + data;
@@ -106,6 +111,19 @@ angular.module('lgtmGeneratorApp')
             img.hitArea = layer;
             stage.update();
           };
+
+          $scope.fill_color = '#FFFFFF';
+          $scope.stroke_color = '#000000';
+
+          $scope.$watch('fill_color', function(color) {
+            lgtm_text.color = color;
+            stage.update();
+          });
+
+          $scope.$watch('stroke_color', function(color) {
+            lgtm_text_outline.color = color;
+            stage.update();
+          });
         }).
         error(function(data, status){
         });
@@ -260,19 +278,6 @@ angular.module('lgtmGeneratorApp')
         alert("ダウンロードに失敗しました");
       }
     }
-
-    $scope.fill_color = '#FFFFFF';
-    $scope.stroke_color = '#000000';
-
-    $scope.$watch('fill_color', function(color) {
-      lgtm_text.color = color;
-      stage.update();
-    });
-
-    $scope.$watch('stroke_color', function(color) {
-      lgtm_text_outline.color = color;
-      stage.update();
-    });
 
     // function imageLoadError(){
     //   alert("Error:画像のロードに失敗しました\n指定したものが画像でないか、取得できません。");
