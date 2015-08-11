@@ -114,13 +114,17 @@ angular.module('lgtmGeneratorApp')
     function resizeImage(multiple) {
       if (typeof multiple === 'undefined') multiple = 1;
 
-      var MAX_PX_SIZE = 900;
+      var MAX_PX_SIZE = 700;
       var w = parseInt(img.image.width * multiple);
       var h = parseInt(img.image.height * multiple);
 
       // アスペクト比をたもったままリサイズ
-      // var scale = Math.min( MAX_PX_SIZE / w, MAX_PX_SIZE / h);
       var scale = multiple;
+
+      if (w > MAX_PX_SIZE || h > MAX_PX_SIZE) {
+        scale = multiple * Math.min( MAX_PX_SIZE / w, MAX_PX_SIZE / h);
+      }
+
       img.scaleX = scale;
       img.scaleY = scale;
       var rsizew = img.image.width * scale;
